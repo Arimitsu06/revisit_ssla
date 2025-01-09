@@ -29,7 +29,7 @@ To use LDC with LwF, run
 To use LDC with SSLA and LwF, run
 
    ```
-    python main.py --config=exps/ssla_ldc.json
+    python main.py --config=exps/ssla_lwf.json
    ```
 
 ### Configuration Options
