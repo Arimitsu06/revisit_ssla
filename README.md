@@ -1,4 +1,4 @@
-# Revisiting Self-Supervised Label Augmentation for Exemplar-Free Class-Incremental Learning
+# Revisiting Self-Supervised Label Augmentation for Exemplar-Free Class-Incremental Learning (WORK IN PROGRESS)
 
 
 ## Implementation for Supervised Continual Learning
