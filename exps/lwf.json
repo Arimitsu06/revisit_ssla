@@ -21,5 +21,11 @@
     "ADC": false,
     "SDC": false,
     "LDC": true,
-    "NCM": true
+    "NCM": true,
+    "ssla": false,
+    "ssla_tasks": "init_only",
+    "ssla_kd": "nonaug_only",
+    "rot90": false,
+    "freq_filter": false,
+    "freq_filter_radius": 3
 }
