@@ -49,7 +49,8 @@ Ablation study on the effectiveness of proposed components, including self-super
 
 ## Implementation for Supervised Continual Learning
 
-The code framework is taken from [PyCIL](https://github.com/G-U-N/PyCIL) and [LDC](https://github.com/alviur/ldc).
+The code framework is taken from [PyCIL](https://github.com/G-U-N/PyCIL) and [LDC](https://github.com/alviur/ldc). Applicant modified code is documented in this [file](https://github.com/Arimitsu06/revisit_ssla/blob/main/models/lwf.py), this [file](https://github.com/Arimitsu06/revisit_ssla/blob/main/exps/ssla_lwf.json), and this [file](https://github.com/Arimitsu06/revisit_ssla/blob/main/utils/inc_net.py).
+
 
 ### Dependencies
 1. [torch 1.81](https://github.com/pytorch/pytorch)
@@ -92,3 +93,6 @@ freq_filter_radius: Int
 ```
 
 The configs can be modified in [exps/ssla_lwf.json](https://github.com/arimitsu06/revisit_ssla/blob/main/exps/ssla_lwf.json).
+
+### Applicant Modified Code
+
