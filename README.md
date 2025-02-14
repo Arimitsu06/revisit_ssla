@@ -93,6 +93,3 @@ freq_filter_radius: Int
 ```
 
 The configs can be modified in [exps/ssla_lwf.json](https://github.com/arimitsu06/revisit_ssla/blob/main/exps/ssla_lwf.json).
-
-### Applicant Modified Code
-
