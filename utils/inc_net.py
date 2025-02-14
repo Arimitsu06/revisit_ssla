@@ -14,6 +14,17 @@ from convs.resnet_cbam import resnet18_cbam,resnet34_cbam,resnet50_cbam
 import timm
 import torch.nn.functional as F
 
+# Applicant created code start
+class GateLayer(nn.Module):
+    def __init__(self, input_size):
+        super(GateLayer, self).__init__()
+        self.gate = nn.Parameter(torch.ones(input_size))
+        self.bias = nn.Parameter(torch.zeros(input_size))
+        
+    def forward(self, x):
+        return x * F.sigmoid(x * self.gate + self.bias)
+# Applicant created code end
+    
 
 def get_convnet(args, pretrained=False):
     name = args["convnet_type"].lower()
@@ -49,13 +60,17 @@ def get_convnet(args, pretrained=False):
     else:
         raise NotImplementedError("Unknown type {}".format(name))
 
-
+# Applicant modified code start
 class BaseNet(nn.Module):
     def __init__(self, args, pretrained):
         super(BaseNet, self).__init__()
         self.convnet = get_convnet(args, pretrained)
         self.args = args
         self.fc = None
+        self.aug_fc = nn.Linear(512, 10)
+        self.rot_fc = nn.Linear(512, 4)
+        self.gatelayer_aug = GateLayer(512)
+        self.gatelayer_rot = GateLayer(512)
 
     @property
     def feature_dim(self):
@@ -63,6 +78,28 @@ class BaseNet(nn.Module):
 
     def extract_vector(self, x):
         return self.convnet(x)["features"]
+    
+    def decoupled_forward(self, x):
+        x = self.convnet(x)
+        out = self.fc(x["features"])
+        aug_out = self.gatelayer_aug(x["features"])
+        aug_out = self.aug_fc(aug_out)
+        rot_out = self.gatelayer_rot(x["features"])
+        rot_out = self.rot_fc(rot_out)
+        """
+        {
+            'fmaps': [x_1, x_2, ..., x_n],
+            'features': features,
+            'logits': logits,
+            'aug_logits': aug_logits,
+            'rot_logits': rot_logits,
+        }
+        """
+        out.update(x)
+        out['aug_logits'] = aug_out
+        out['rot_logits'] = rot_out
+        
+        return out
 
     def forward(self, x):
         x = self.convnet(x)
@@ -93,7 +130,7 @@ class BaseNet(nn.Module):
         self.eval()
 
         return self
-
+# Applicant modified code end
 
 class IncrementalNet(BaseNet):
     def __init__(self, args, pretrained, gradcam=False):

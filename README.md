@@ -70,7 +70,9 @@ To use LDC with SSLA and LwF, run
 ### Configuration Options
 
 ```
-ssla: [true, false]
+ssla: [true, false],
+decoupled: [true, false],
+decoupled_aug: [true, false],
 ssla_tasks: ["init_only", "all"],
 ssla_kd: ["nonaug_only", "all"],
 rot90: [true, false],

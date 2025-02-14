@@ -75,14 +75,24 @@ class LwF(BaseLearner):
     def incremental_train(self, data_manager):
         self.data_manager = data_manager
         self._cur_task += 1
+        
+        # Applicant modified code starts here
         if self.args['dataset'] == "cifar100":
-            self.data_manager._train_trsf = [
-                transforms.RandomCrop(32, padding=4),
-                transforms.RandomHorizontalFlip(),
-                transforms.ColorJitter(brightness=63/255),
-                CIFAR10Policy(),
-                transforms.ToTensor(),
-            ]
+            if self.args["decoupled_aug"]:
+                self.data_manager._train_trsf = [
+                    transforms.RandomCrop(32, padding=4),
+                    transforms.ToTensor(),
+                ]
+            else:
+                self.data_manager._train_trsf = [
+                    transforms.RandomCrop(32, padding=4),
+                    transforms.RandomHorizontalFlip(),
+                    transforms.ColorJitter(brightness=63/255),
+                    CIFAR10Policy(),
+                    transforms.ToTensor(),
+                ]
+        # Applicant modified code ends here
+        
         elif self.args['dataset'] == "tinyimagenet200":
             self.data_manager._train_trsf = [
                 transforms.RandomCrop(64, padding=4),
@@ -109,22 +119,44 @@ class LwF(BaseLearner):
         )
 
         self.shot = None
+        
+        # Applicant modified code starts here
+        train_dataset_init = data_manager.get_dataset(
+            np.arange(self._known_classes, self._total_classes),
+            source="train",
+            mode="train",
+            shot=self.shot
+        )
+        if self.args["decoupled_aug"]:
+            self.data_manager._train_trsf = [
+                    transforms.RandomCrop(32, padding=4),
+                    transforms.RandomHorizontalFlip(),
+                    transforms.ColorJitter(brightness=63/255),
+                    CIFAR10Policy(),
+                    transforms.ToTensor(),
+                ]
         train_dataset = data_manager.get_dataset(
             np.arange(self._known_classes, self._total_classes),
             source="train",
             mode="train",
             shot=self.shot
         )
-        # self.train_dataset = train_dataset
+
         divide_batch_size = 1
-        if self.args["rot90"]:
+        if self.args["ssla"] and not self.args["decoupled"] and self.args["rot90"]:
             divide_batch_size *= 4
-        if self.args["freq_filter"]:
+        if self.args["ssla"] and not self.args["decoupled"] and self.args["freq_filter"]:
             divide_batch_size *= 3
-            
+        if self.args["ssla"] and self.args["decoupled"] and self.args["decoupled_aug"]:
+            divide_batch_size = 5
+        if self.args["ssla"] and self.args["decoupled"] and not self.args["decoupled_aug"]:
+            divide_batch_size = 4
+        
         self.ssla_train_loader = DataLoader(
-            train_dataset, batch_size=batch_size // divide_batch_size, shuffle=True, num_workers=num_workers
+            train_dataset_init, batch_size=batch_size // divide_batch_size, shuffle=True, num_workers=num_workers
         )
+        # Applicant modified code ends here
+        
         self.train_loader = DataLoader(
             train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers
         )
@@ -283,12 +315,18 @@ class LwF(BaseLearner):
             class_mean = np.mean(vectors, axis=0) # vectors.mean(0)
             self._protos.append(torch.tensor(class_mean).to(self._device))
             
+    # Applicant created code starts here
     def ssla_rot90(self, inputs, targets, num_classes):
-        inputs_rot = torch.cat([torch.rot90(inputs, k, (2, 3)) for k in range(1, 4)])
-        inputs = torch.cat((inputs, inputs_rot))
-        target_rot = torch.cat([(targets + num_classes * k) for k in range(1, 4)])
-        targets = torch.cat((targets, target_rot))
-        return inputs, targets
+        inputs_rot = [inputs] + [torch.rot90(inputs, k, (2, 3)) for k in range(1, 4)]
+        targets_rot = [targets] + [targets + num_classes * k for k in range(1, 4)]
+        
+        return torch.cat(inputs_rot), torch.cat(targets_rot)
+    
+    def decoupled_ssla_rot90(self, inputs, targets):
+        inputs_rot = [inputs] + [torch.rot90(inputs, k, (2, 3)) for k in range(1, 4)]
+        target_rot = [torch.full_like(targets, k) for k in range(4)]
+
+        return torch.cat(inputs_rot), torch.cat(target_rot)
     
     def ssla_freq_filter(self, inputs, targets, total_classes):
         radius = self.args["freq_filter_radius"]
@@ -321,32 +359,78 @@ class LwF(BaseLearner):
         targets = torch.cat((targets, target_low_pass, target_high_pass), dim=0)
 
         return inputs, targets
+    # Applicant created code ends here
 
     def _init_train(self, train_loader, test_loader, optimizer, scheduler):
         prog_bar = tqdm(range(init_epoch))
+        
+        # Applicant created code starts here
+        trsf = transforms.Compose([
+                transforms.ToPILImage(),
+                transforms.RandomHorizontalFlip(),
+                transforms.ColorJitter(brightness=63/255),
+                CIFAR10Policy(),
+                transforms.ToTensor(),
+        ])
+        # Applicant created code ends here
+        
         for _, epoch in enumerate(prog_bar):
             self._network.train()
             losses = 0.0
             correct, total = 0, 0
             for i, (_, inputs, targets) in enumerate(train_loader):
                 inputs, targets = inputs.to(self._device), targets.to(self._device)
+                
+                # Applicant created code starts here
                 cls_multiplier = 1
+                if self.args["decoupled"]:
+                    inputs, rot_targets = self.decoupled_ssla_rot90(inputs, targets)
+                    
+                if self.args["decoupled"] and self.args["decoupled_aug"]:
+                    aug_inputs = []
+                    for input in inputs:
+                        aug_inputs.append(trsf(input))
+                        
+                    aug_inputs = torch.stack(aug_inputs).to(self._device)
+                    inputs = torch.cat((inputs, aug_inputs))
+                
                 if self.args["rot90"]:
                     inputs, targets = self.ssla_rot90(inputs, targets, self.args["init_cls"]*cls_multiplier)
                     cls_multiplier *= 4
+                    
                 if self.args["freq_filter"]:
                     inputs, targets = self.ssla_freq_filter(inputs, targets, self.args["init_cls"]*cls_multiplier)
                     cls_multiplier *= 3
-                        
-                logits = self._network(inputs)["logits"]
-
-                loss = F.cross_entropy(logits, targets)
+                
+                if self.args["decoupled"]:
+                    output = self._network.decoupled_forward(inputs)
+                else:
+                    output = self._network(inputs)
+                
+                if self.args["decoupled"]:
+                    loss = F.cross_entropy(output["logits"][:targets.shape[0]], targets)
+                    rot_loss = F.cross_entropy(output["rot_logits"][:int(targets.shape[0]*4)], rot_targets)
+                    loss += rot_loss
+                    
+                    if self.args["decoupled_aug"]:                
+                        aug_loss = F.cross_entropy(output["aug_logits"][int(targets.shape[0]*4):], targets)
+                        loss += aug_loss
+                else:
+                    loss = F.cross_entropy(output["logits"], targets)
+                # Applicant created code ends here
+                
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
                 losses += loss.item()
-
-                _, preds = torch.max(logits, dim=1)
+                
+                # Applicant modified code starts here
+                if self.args["decoupled"]:
+                    _, preds = torch.max(output["logits"][:int(targets.shape[0])], dim=1)
+                else:
+                    _, preds = torch.max(output["logits"], dim=1)
+                # Applicant modified code ends here
+                    
                 correct += preds.eq(targets.expand_as(preds)).cpu().sum()
                 total += len(targets)
 
@@ -384,6 +468,8 @@ class LwF(BaseLearner):
             correct, total = 0, 0
             for i, (_, inputs, targets) in enumerate(train_loader):
                 inputs, targets = inputs.to(self._device), targets.to(self._device)
+                
+                # Applicant created code starts here
                 cls_multiplier = 1
                 if self.args["rot90"]:
                     if self.args["ssla_tasks"] == "all":
@@ -393,10 +479,13 @@ class LwF(BaseLearner):
                     if self.args["ssla_tasks"] == "all":
                         inputs = self.ssla_freq_filter(inputs, targets, self.args["init_cls"]*cls_multiplier)
                     cls_multiplier *= 3
+                # Applicant created code ends here
                         
                 logits = self._network(inputs)["logits"]
 
                 fake_targets = targets - self._known_classes
+                
+                # Applicant created code starts here
                 if self.args["ssla_tasks"] == "init_only":
                     loss_clf = F.cross_entropy(
                         logits[:, self._known_classes + self.args["init_cls"]*(cls_multiplier-1) : ], fake_targets
@@ -441,6 +530,7 @@ class LwF(BaseLearner):
                         old_logits,
                         T,
                     )
+                # Applicant created code ends here
 
                 loss = lamda * loss_kd + loss_clf
 

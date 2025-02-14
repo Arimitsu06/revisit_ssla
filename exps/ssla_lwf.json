@@ -23,6 +23,8 @@
     "LDC": true,
     "NCM": true,
     "ssla": true,
+    "decoupled": false,
+    "decoupled_aug": false,
     "ssla_tasks": "init_only",
     "ssla_kd": "nonaug_only",
     "rot90": true,

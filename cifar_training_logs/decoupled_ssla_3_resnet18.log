@@ -1,0 +1,104 @@
+2025-02-01 16:21:18,604 [trainer.py] => config: exps/ssla_lwf.json
+2025-02-01 16:21:18,604 [trainer.py] => prefix: FIXED_decoupled_ssla
+2025-02-01 16:21:18,604 [trainer.py] => dataset: cifar100
+2025-02-01 16:21:18,604 [trainer.py] => memory_size: 0
+2025-02-01 16:21:18,604 [trainer.py] => fixed_memory: False
+2025-02-01 16:21:18,604 [trainer.py] => shuffle: True
+2025-02-01 16:21:18,604 [trainer.py] => cosine: True
+2025-02-01 16:21:18,604 [trainer.py] => init_cls: 10
+2025-02-01 16:21:18,604 [trainer.py] => increment: 10
+2025-02-01 16:21:18,604 [trainer.py] => model_name: lwf
+2025-02-01 16:21:18,604 [trainer.py] => convnet_type: resnet18
+2025-02-01 16:21:18,604 [trainer.py] => pretrained: True
+2025-02-01 16:21:18,604 [trainer.py] => batch_size: 128
+2025-02-01 16:21:18,604 [trainer.py] => device: [device(type='cuda', index=0)]
+2025-02-01 16:21:18,604 [trainer.py] => seed: 3
+2025-02-01 16:21:18,604 [trainer.py] => resume: False
+2025-02-01 16:21:18,605 [trainer.py] => model_dir: weights/lwf/
+2025-02-01 16:21:18,605 [trainer.py] => sigma: 0.3
+2025-02-01 16:21:18,605 [trainer.py] => alpha: 25
+2025-02-01 16:21:18,605 [trainer.py] => adv_epoch: 4
+2025-02-01 16:21:18,605 [trainer.py] => sample_limit: 100
+2025-02-01 16:21:18,605 [trainer.py] => ADC: False
+2025-02-01 16:21:18,605 [trainer.py] => SDC: False
+2025-02-01 16:21:18,605 [trainer.py] => LDC: True
+2025-02-01 16:21:18,605 [trainer.py] => NCM: True
+2025-02-01 16:21:18,605 [trainer.py] => ssla: False
+2025-02-01 16:21:18,605 [trainer.py] => decoupled: True
+2025-02-01 16:21:18,605 [trainer.py] => decoupled_aug: True
+2025-02-01 16:21:18,605 [trainer.py] => ssla_tasks: init_only
+2025-02-01 16:21:18,605 [trainer.py] => ssla_kd: nonaug_only
+2025-02-01 16:21:18,605 [trainer.py] => rot90: False
+2025-02-01 16:21:18,605 [trainer.py] => freq_filter: False
+2025-02-01 16:21:18,605 [trainer.py] => freq_filter_radius: 3
+2025-02-01 16:21:19,532 [data_manager.py] => [93, 67, 6, 64, 96, 83, 98, 42, 25, 15, 77, 9, 71, 97, 34, 75, 82, 23, 59, 45, 73, 12, 8, 4, 79, 86, 17, 65, 47, 50, 30, 5, 13, 31, 88, 11, 58, 85, 32, 40, 16, 27, 35, 36, 92, 90, 78, 76, 68, 46, 53, 70, 80, 61, 18, 91, 57, 95, 54, 55, 28, 52, 84, 89, 49, 87, 37, 48, 33, 43, 7, 62, 99, 29, 69, 51, 1, 60, 63, 2, 66, 22, 81, 26, 14, 39, 44, 20, 38, 94, 10, 41, 74, 19, 21, 0, 72, 56, 3, 24]
+2025-02-01 16:21:19,648 [trainer.py] => All params: 11178062
+2025-02-01 16:21:19,648 [trainer.py] => Trainable params: 11178062
+2025-02-01 16:21:19,648 [lwf.py] => Learning on 0-10
+2025-02-01 16:48:55,334 [lwf.py] => Task 0, Epoch 200/200 => Loss 0.260, Train_accy 100.00
+2025-02-01 16:48:57,052 [trainer.py] => No NME accuracy.
+2025-02-01 16:48:57,053 [trainer.py] => CNN: {'total': 85.6, '00-09': 85.6, 'old': 0, 'new': 85.6}
+2025-02-01 16:48:57,053 [trainer.py] => CNN top1 curve: [85.6]
+2025-02-01 16:48:57,053 [trainer.py] => All params: 11183183
+2025-02-01 16:48:57,053 [trainer.py] => Trainable params: 11183183
+2025-02-01 16:48:57,053 [lwf.py] => Learning on 10-20
+2025-02-01 16:51:58,920 [lwf.py] => Task 1, Epoch 100/100 => Loss 18.794, Train_accy 71.38
+2025-02-01 16:52:32,685 [trainer.py] => No NME accuracy.
+2025-02-01 16:52:32,685 [trainer.py] => CNN: {'total': 74.25, '00-09': 69.2, '10-19': 79.3, 'old': 69.2, 'new': 79.3}
+2025-02-01 16:52:32,685 [trainer.py] => CNN top1 curve: [85.6, 74.25]
+2025-02-01 16:52:32,686 [trainer.py] => All params: 11188303
+2025-02-01 16:52:32,686 [trainer.py] => Trainable params: 11188303
+2025-02-01 16:52:32,686 [lwf.py] => Learning on 20-30
+2025-02-01 16:55:35,135 [lwf.py] => Task 2, Epoch 100/100 => Loss 24.268, Train_accy 61.64
+2025-02-01 16:56:08,943 [trainer.py] => No NME accuracy.
+2025-02-01 16:56:08,943 [trainer.py] => CNN: {'total': 68.5, '00-09': 58.6, '10-19': 75.9, '20-29': 71.0, 'old': 67.25, 'new': 71.0}
+2025-02-01 16:56:08,944 [trainer.py] => CNN top1 curve: [85.6, 74.25, 68.5]
+2025-02-01 16:56:08,944 [trainer.py] => All params: 11193423
+2025-02-01 16:56:08,944 [trainer.py] => Trainable params: 11193423
+2025-02-01 16:56:08,944 [lwf.py] => Learning on 30-40
+2025-02-01 16:59:12,040 [lwf.py] => Task 3, Epoch 100/100 => Loss 26.572, Train_accy 48.28
+2025-02-01 16:59:45,942 [trainer.py] => No NME accuracy.
+2025-02-01 16:59:45,942 [trainer.py] => CNN: {'total': 63.38, '00-09': 45.7, '10-19': 72.9, '20-29': 66.1, '30-39': 68.8, 'old': 61.57, 'new': 68.8}
+2025-02-01 16:59:45,942 [trainer.py] => CNN top1 curve: [85.6, 74.25, 68.5, 63.38]
+2025-02-01 16:59:45,943 [trainer.py] => All params: 11198543
+2025-02-01 16:59:45,943 [trainer.py] => Trainable params: 11198543
+2025-02-01 16:59:45,944 [lwf.py] => Learning on 40-50
+2025-02-01 17:02:49,347 [lwf.py] => Task 4, Epoch 100/100 => Loss 29.272, Train_accy 50.24
+2025-02-01 17:03:23,352 [trainer.py] => No NME accuracy.
+2025-02-01 17:03:23,352 [trainer.py] => CNN: {'total': 60.34, '00-09': 39.5, '10-19': 68.5, '20-29': 62.0, '30-39': 62.9, '40-49': 68.8, 'old': 58.22, 'new': 68.8}
+2025-02-01 17:03:23,353 [trainer.py] => CNN top1 curve: [85.6, 74.25, 68.5, 63.38, 60.34]
+2025-02-01 17:03:23,353 [trainer.py] => All params: 11203663
+2025-02-01 17:03:23,354 [trainer.py] => Trainable params: 11203663
+2025-02-01 17:03:23,354 [lwf.py] => Learning on 50-60
+2025-02-01 17:06:26,937 [lwf.py] => Task 5, Epoch 100/100 => Loss 31.416, Train_accy 47.16
+2025-02-01 17:07:00,969 [trainer.py] => No NME accuracy.
+2025-02-01 17:07:00,970 [trainer.py] => CNN: {'total': 57.68, '00-09': 35.6, '10-19': 64.8, '20-29': 57.6, '30-39': 58.3, '40-49': 62.1, '50-59': 67.7, 'old': 55.68, 'new': 67.7}
+2025-02-01 17:07:00,970 [trainer.py] => CNN top1 curve: [85.6, 74.25, 68.5, 63.38, 60.34, 57.68]
+2025-02-01 17:07:00,970 [trainer.py] => All params: 11208783
+2025-02-01 17:07:00,970 [trainer.py] => Trainable params: 11208783
+2025-02-01 17:07:00,971 [lwf.py] => Learning on 60-70
+2025-02-01 17:10:05,072 [lwf.py] => Task 6, Epoch 100/100 => Loss 31.779, Train_accy 42.14
+2025-02-01 17:10:39,197 [trainer.py] => No NME accuracy.
+2025-02-01 17:10:39,197 [trainer.py] => CNN: {'total': 55.51, '00-09': 29.1, '10-19': 60.5, '20-29': 47.2, '30-39': 54.5, '40-49': 60.1, '50-59': 64.3, '60-69': 72.9, 'old': 52.62, 'new': 72.9}
+2025-02-01 17:10:39,197 [trainer.py] => CNN top1 curve: [85.6, 74.25, 68.5, 63.38, 60.34, 57.68, 55.51]
+2025-02-01 17:10:39,198 [trainer.py] => All params: 11213903
+2025-02-01 17:10:39,198 [trainer.py] => Trainable params: 11213903
+2025-02-01 17:10:39,199 [lwf.py] => Learning on 70-80
+2025-02-01 17:13:43,720 [lwf.py] => Task 7, Epoch 100/100 => Loss 34.391, Train_accy 40.10
+2025-02-01 17:14:18,101 [trainer.py] => No NME accuracy.
+2025-02-01 17:14:18,102 [trainer.py] => CNN: {'total': 52.34, '00-09': 26.8, '10-19': 56.0, '20-29': 43.0, '30-39': 46.5, '40-49': 51.7, '50-59': 59.6, '60-69': 69.8, '70-79': 65.3, 'old': 50.49, 'new': 65.3}
+2025-02-01 17:14:18,102 [trainer.py] => CNN top1 curve: [85.6, 74.25, 68.5, 63.38, 60.34, 57.68, 55.51, 52.34]
+2025-02-01 17:14:18,102 [trainer.py] => All params: 11219023
+2025-02-01 17:14:18,102 [trainer.py] => Trainable params: 11219023
+2025-02-01 17:14:18,107 [lwf.py] => Learning on 80-90
+2025-02-01 17:17:22,707 [lwf.py] => Task 8, Epoch 100/100 => Loss 35.243, Train_accy 42.54
+2025-02-01 17:17:57,139 [trainer.py] => No NME accuracy.
+2025-02-01 17:17:57,139 [trainer.py] => CNN: {'total': 50.32, '00-09': 26.5, '10-19': 51.6, '20-29': 42.5, '30-39': 42.5, '40-49': 48.2, '50-59': 55.2, '60-69': 64.4, '70-79': 60.0, '80-89': 62.0, 'old': 48.86, 'new': 62.0}
+2025-02-01 17:17:57,139 [trainer.py] => CNN top1 curve: [85.6, 74.25, 68.5, 63.38, 60.34, 57.68, 55.51, 52.34, 50.32]
+2025-02-01 17:17:57,140 [trainer.py] => All params: 11224143
+2025-02-01 17:17:57,140 [trainer.py] => Trainable params: 11224143
+2025-02-01 17:17:57,145 [lwf.py] => Learning on 90-100
+2025-02-01 17:21:02,318 [lwf.py] => Task 9, Epoch 100/100 => Loss 36.678, Train_accy 41.20
+2025-02-01 17:21:36,935 [trainer.py] => No NME accuracy.
+2025-02-01 17:21:36,935 [trainer.py] => CNN: {'total': 47.74, '00-09': 25.8, '10-19': 49.5, '20-29': 39.2, '30-39': 39.5, '40-49': 43.7, '50-59': 47.5, '60-69': 62.5, '70-79': 55.5, '80-89': 54.9, '90-99': 59.3, 'old': 46.46, 'new': 59.3}
+2025-02-01 17:21:36,935 [trainer.py] => CNN top1 curve: [85.6, 74.25, 68.5, 63.38, 60.34, 57.68, 55.51, 52.34, 50.32, 47.74]
