@@ -2,7 +2,7 @@
 
 ## UPDATE:
 
-Training logs for the rest of the random seeds for the last ablation have been added to ```cifar_training_logs```. Updated tables are below as well. The proposed method has also been compared to decoupled SSLA and evaluated on Tiny-ImageNet.
+Training logs for the rest of the random seeds for the last ablation have been added to ```cifar_training_logs```. Updated tables are below as well. The proposed method has also been compared to decoupled SSLA and evaluated on Tiny-ImageNet and Skin23, a dermatology imaging dataset.
 
 ## Method
 <p align="center">
@@ -14,7 +14,7 @@ an $N$ class problem.
 
 ## Results
 
-You can check our training logs for [CIFAR-100](https://github.com/arimitsu06/revisit_ssla/blob/main/cifar_training_logs) and [Tiny-ImageNet](https://github.com/arimitsu06/revisit_ssla/blob/main/tinyimagenet_training_logs)
+You can check our training logs for [CIFAR-100](https://github.com/arimitsu06/revisit_ssla/blob/main/cifar_training_logs), [Tiny-ImageNet](https://github.com/arimitsu06/revisit_ssla/blob/main/tinyimagenet_training_logs), and [Skin23](https://github.com/arimitsu06/revisit_ssla/blob/main/skin_training_logs).
 
 
 
@@ -26,8 +26,9 @@ You can check our training logs for [CIFAR-100](https://github.com/arimitsu06/re
 | EFC               | ICLR '24  | 43.6 ± 0.7             | 58.6 ± 0.9             | 34.1 ± 0.5                | 48.0 ± 0.6                |
 | ADC               | CVPR '24  | 45.4 ± 3.0             | 59.6 ± 4.1             | 32.7 ± 0.4                | 44.9 ± 1.0                |
 | LDC               | ECCV '24  | 45.4 ± 2.8             | 59.5 ± 3.9             | 34.2 ± 0.7                | 46.8 ± 1.1                |
-| AdaGauss         | NeurIPS '24 | <u>46.1</u> ± 0.8           | <u>60.2</u> ± 0.9           | <u>36.5</u> ± 0.9              | <u>50.6</u> ± 0.8              |
-| **LDC + SSLA**       | -         | **48.6** ± 0.7         | **63.3** ± 1.5         | **39.2** ± 0.1            | **52.8** ± 0.9            |
+| AdaGauss         | NeurIPS '24 | 46.1 ± 0.8           | 60.2 ± 0.9           | 36.5 ± 0.9              | 50.6 ± 0.8              |
+| **LDC + SSLA**       | Freq-Filter   | <u>47.8</u> ± 0.4         | <u>62.4</u> ± 1.3  | <u>37.7</u> ± 0.6            | **53.1** ± 0.8            |
+| **LDC + SSLA**       | Rot90 | **48.6** ± 0.7         | **63.3** ± 1.5         | **39.2** ± 0.1            | <u>52.8</u> ± 0.9            |
 
 Comparison of last and average incremental task accuracy ($A_{last}$ and $A_{inc}$)  for 10 tasks for CIFAR-100 and Tiny-ImageNet. Mean and standard deviation using 5 different random seeds are shown. Best results are **bold** and second best are <u>underlined</u>.
 
