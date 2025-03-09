@@ -27,8 +27,8 @@ You can check our training logs for [CIFAR-100](https://github.com/arimitsu06/re
 | ADC               | CVPR '24  | 45.4 ± 3.0             | 59.6 ± 4.1             | 32.7 ± 0.4                | 44.9 ± 1.0                |
 | LDC               | ECCV '24  | 45.4 ± 2.8             | 59.5 ± 3.9             | 34.2 ± 0.7                | 46.8 ± 1.1                |
 | AdaGauss         | NeurIPS '24 | 46.1 ± 0.8           | 60.2 ± 0.9           | 36.5 ± 0.9              | 50.6 ± 0.8              |
-| **LDC + SSLA**       | Freq-Filter   | <u>47.8</u> ± 0.4         | <u>62.4</u> ± 1.3  | <u>37.7</u> ± 0.6            | **53.1** ± 0.8            |
-| **LDC + SSLA**       | Rot90 | **48.6** ± 0.7         | **63.3** ± 1.5         | **39.2** ± 0.1            | <u>52.8</u> ± 0.9            |
+| **LDC + SSLA**       | Freq-Filter   | <ins>47.8</ins> ± 0.4         | <ins>62.4</ins> ± 1.3  | <ins>37.7</ins> ± 0.6            | **53.1** ± 0.8            |
+| **LDC + SSLA**       | Rot90 | **48.6** ± 0.7         | **63.3** ± 1.5         | **39.2** ± 0.1            | <ins>52.8</ins> ± 0.9            |
 
 Comparison of last and average incremental task accuracy ($A_{last}$ and $A_{inc}$)  for 10 tasks for CIFAR-100 and Tiny-ImageNet. Mean and standard deviation using 5 different random seeds are shown. Best results are **bold** and second best are <u>underlined</u>.
 
@@ -38,7 +38,7 @@ Comparison of last and average incremental task accuracy ($A_{last}$ and $A_{inc
 | ✔️           | ✔️    |             |    |      | 120  | 41.2      | 60.9      |
 | ✔️           | ✔️    |             | ✔️  |      | 120  | 46.2      | **64.4**  |
 | ✔️           | ✔️    |             |    | ✔️    | 50   | 47.3      | 62.9      |
-| ✔️           | ✔️    |             | ✔️  | ✔️    | 50   | **48.6**  | <u>63.3</u>    |
+| ✔️           | ✔️    |             | ✔️  | ✔️    | 50   | **48.6**  | <ins>63.3</ins>    |
 | ✔️ (D)       | ✔️    |             | ✔️  | ✔️    | 60   | 47.4      | 61.3      |
 | ✔️ (D*)      | ✔️    |             | ✔️  | ✔️    | 50   | 48.0      | 62.9      |
 | ✔️           |      | ✔️ (2)       | ✔️  | ✔️    | 46   | 47.3      | 62.1      |
