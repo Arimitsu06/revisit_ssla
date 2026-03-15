@@ -1,6 +1,7 @@
 # Revisiting Self-Supervised Label Augmentation for Exemplar-Free Class-Incremental Learning
 
 This repository contains code for my ISEF project which won the 4th grade award in Robotics and Intelligent Machines.
+https://isef.net/project/robo019-improving-generalizability-in-continual-learning
 
 ## UPDATE:
 
